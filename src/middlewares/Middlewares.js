@@ -1,3 +1,5 @@
+const z = require('zod')
+
 //validate model
 const validateModel = (schema) => {
     return async (req, res, next) => {
@@ -13,6 +15,7 @@ const validateModel = (schema) => {
     };
 };
 
+const email = z.string().email()
 
 const existByUserName = (model) => {
     return async (req, res, next) => {
@@ -25,16 +28,50 @@ const existByUserName = (model) => {
 };
 
 
-const validateUserNamePassword = (req) => {
-    const {name, password} = req;
+const compareUserLogIn = (user) => {
+    const userLogin = z.object({
+        name: z.string().min(5, {message: "name must be 5 or more characters long"}),
+        password: z.string().min(6, {message: "Password must be 6 or more characters long"})
+    })
+    try{
+        userLogin.parse(user)
+    }catch(err){
+        if(err instanceof z.ZodError){
+        errors = []
+        err.errors.map((error) => {
+            errors.push(error.message)
+        })
+        throw new Error(JSON.stringify(errors))
+        }else{
+            console.log(err)
+        }
+    }
 
-    if(typeof name != 'string') throw new Error('userName must be a string');
-    if(name.length < 3) throw new Error('userName must be at least 3 characters');
+};
 
-    if(typeof password != 'string') throw new Error('password must be a string');
-    if(password.length < 3) throw new Error('password must be at least 3 characters');
+
+const compareFullUser = (user) => {
+    const userRegister = z.object({
+        name: z.string().min(5,"Name must be 5 or more characters long"),
+        email: z.string().email("It must be a valid email address"),
+        password: z.string().min(6,"Password must be 6 or more characters long")
+    })
+    try{
+        userRegister.parse(user)
+    }catch(err){
+        if(err instanceof z.ZodError){
+        errors = []
+        err.errors.map((error) => {
+            errors.push(error.message)
+        })
+        throw new Error(JSON.stringify(errors))
+        }else{
+            console.log(err)
+        }
+    }
     
-}
+};
 
 
-module.exports = {validateModel,existByUserName,validateUserNamePassword}
+
+module.exports = {validateModel,existByUserName,compareUserLogIn,compareFullUser,email}
