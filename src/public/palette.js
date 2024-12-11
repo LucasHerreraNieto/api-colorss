@@ -4,12 +4,13 @@ class Palette{
 
     colors
     name = "nameless palette"
+    catogory 
 
     constructor(data){
         if(data instanceof Array){
             this.colors = data
-        }else if (data instanceof Color || typeof data == 'string'){
-            this.colors = this.generateBycolor(data)
+        }else if (data instanceof Color ){
+            this.colors = this.generateMonocrhomaticPalette(data)
         }else{
             this.colors = this.generateColors(5)
         }
@@ -30,13 +31,6 @@ class Palette{
         }else{
             throw Exeption ("The palette is full")
         }
-    }
-
-    generateBycolor(color) {
-        colors = []
-        colors.push(new Color(color))
-        colors.push(this.generateColors(4))
-        return colors
     }
     
 
@@ -66,7 +60,27 @@ class Palette{
         this.name = name
     }   
 
+    generateMonocrhomaticPalette(color){
+        const colors = []; colors.push(color)
+        for (let i = 1; i < 5; i++) {
+            let factor = 1 - (i / 5)
+            const newRed = this.adjustLuminosity(color.red, factor)
+            const newGreen = this.adjustLuminosity(color.green, factor)
+            const newBlue = this.adjustLuminosity(color.blue, factor)
+            colors.push(new Color('personalized', newRed, newGreen, newBlue)); 
+        } 
+        return colors;
+    }
+
+    adjustLuminosity(colorComponent,factor){
+        const newColorComponent = Math.floor(colorComponent * factor)
+        return Math.min(Math.max(newColorComponent, 0), 255);
+    }
+
 }
 
+const newColor = new Color('personalized', 100, 50, 120)
+const newPalette = new Palette(newColor)
+console.log(newPalette)
 
-module.exports = Palette
+//module.exports = Palette

@@ -1,4 +1,4 @@
-const { get } = require("mongoose")
+const {ColorCategory} = require('./category')
 
 class Color{
     codHex 
@@ -7,12 +7,8 @@ class Color{
     green
     blue
 
-    constructor(data){
-        if(typeof data != 'undefined' && data.length > 1 ){
-            this.codHex = this.generateBycolor(color)
-        }else {
-            this.codHex = this.randomCodHex()
-        }
+    constructor(data,red,green,blue){
+        this.generateNewColor(data,red,green,blue)
     }
 
     setCodHex(codHex){
@@ -24,9 +20,17 @@ class Color{
         this.blue = blue
     }
     setCategory(category){
-        this.category = category
+        this.category = new ColorCategory(category)
     }
-
+    getRed(){
+        return this.red
+    }
+    getGreen(){
+        return this.green
+    }
+    getBlue(){
+        return this.blue
+    }
     randomCodHex(){
         let hex = new Array("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")
             let random_color= "#";
@@ -47,14 +51,16 @@ class Color{
         return parseInt(lower) + random
     }
     rgbToHex() { 
-        return "#" + this.componentToHex(this.r) + this.componentToHex(this.g) + this.componentToHex(this.b);
+        const newCodHex = "#" + this.componentToHex(this.red) + this.componentToHex(this.green) + this.componentToHex(this.blue);
+        this.setCodHex(newCodHex)
+        return this.codHex
     }
     hexToRgb() {
-        newCodeHex = this.codHex.remplace(/^#/,'')
+        let newCodeHex = this.codHex.replace(/^#/,'')
         let bigint = parseInt(newCodeHex, 16)
-        this.r = (bigint >> 16) & 255
-        this.g = (bigint >> 8) & 255
-        this.b = bigint & 255
+        this.red = (bigint >> 16) & 255
+        this.green = (bigint >> 8) & 255
+        this.blue = bigint & 255
         return this.r, this.g, this.b
     }
 
@@ -63,15 +69,51 @@ class Color{
         return hex.length === 1 ? "0" + hex : hex
     }
 
-    generateBycategory(category){
-        
+    generateNewColor(category,red,green,blue){
+        switch(category){
+            case 'pastel':
+                this.getRandomPastelColor()
+                this.setCategory('pastel')
+                this.setCodHex(this.rgbToHex())
+                break
+            case 'neon':
+                this.setCodHex(this.getRandomNeonColor())
+                this.setCategory('neon')
+                this.hexToRgb()
+                break
+            case 'earth':
+                this.setCodHex(this.getRandomEarthColor())
+                this.setCategory('earth')
+                this.hexToRgb()
+                break
+            case 'metallic':
+                this.setCodHex(this.getRandomMetallicColor())
+                this.setCategory('metallic')
+                this.hexToRgb()
+                break
+            case 'muted':
+                this.getRandomMutedColor()
+                this.setCategory('muted')
+                this.setCodHex(this.rgbToHex())
+                break
+            case 'personalized':
+                this.getPersonalizedColor(red, green, blue)
+                this.setCategory('personalized')
+                this.setCodHex(this.rgbToHex())
+                break
+            default:
+                this.setCodHex(this.randomCodHex())
+                this.setCategory('random')
+                this.hexToRgb()
+                break
+        }
     }
 
     getRandomPastelColor(){
-        const r = Math.floor((Math.random() * 128) + 127);
-        const g = Math.floor((Math.random() * 128) + 127);
-        const b = Math.floor((Math.random() * 128) + 127);
-        this.setRGB(r, g, b)
+        const red = Math.floor((Math.random() * 128) + 127);
+        const green = Math.floor((Math.random() * 128) + 127);
+        const blue = Math.floor((Math.random() * 128) + 127);
+        this.setRGB(red, green, blue)
     }
     getRandomNeonColor(){
         const colors = [
@@ -99,10 +141,14 @@ class Color{
     }
 
     getRandomMutedColor(){
-        const r = Math.floor(Math.random() * 128)
-        const g = Math.floor(Math.random() * 128)
-        const b = Math.floor(Math.random() * 128)
-        this.setRGB(r, g, b)
+        const red = Math.floor(Math.random() * 128)
+        const green = Math.floor(Math.random() * 128)
+        const blue = Math.floor(Math.random() * 128)
+        this.setRGB(red, green, blue)
+    }
+
+    getPersonalizedColor(red,green,blue){
+        this.setRGB(red, green, blue)
     }
 }
 

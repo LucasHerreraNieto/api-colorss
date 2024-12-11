@@ -1,13 +1,8 @@
 class Category{
-    id 
     name
 
-    constructor(id,name){
-        this.id = id;
+    constructor(name){
         this.name = name;
-    }
-    getId(){
-        return this.id;
     }
     getName(){
         return this.name;
@@ -17,22 +12,17 @@ class Category{
 
 
 class PaletteCategory extends Category{
-    constructor(id, name){
-        super(id, name);
+    constructor(name){
+        super(name);
     }
 }
 
 
 class ColorCategory extends Category{
-    constructor(id, name){
-        super(id, name);
+    constructor(name){
+        super(name);
     }
 }
 
-class userCategory extends Category{
-    constructor(id, name){
-        super(id, name);
-    }
-}
 
-module.exports = {PaletteCategory, ColorCategory, userCategory}
+module.exports = {PaletteCategory, ColorCategory}
