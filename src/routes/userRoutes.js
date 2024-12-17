@@ -8,9 +8,9 @@ router.post('/login', userController.login)
 
 router.post('/logout',middleware.verifyToken,userController.logout)
 
-router.post('/save',middleware.verifyToken, userController.savePalette)
+router.post('/:user/save',middleware.verifyToken, userController.savePalette)
 
-router.delete('/delete',middleware.verifyToken, userController.deleteUser)
+router.delete('/:user/delete',middleware.verifyToken, userController.deleteUser)
 
 router.put('/:user/modify/name',middleware.verifyToken, userController.modifyUserName)
 

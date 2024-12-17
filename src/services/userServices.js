@@ -76,10 +76,9 @@ async function logout(cookie) {
     
 }
 
-async function savePalette(data) {
+async function savePalette( user,palette) {
     try{
-    const {name, palette} = data
-    const userSaved = await getUserByUserName(name)
+    const userSaved = await getUserByUserName(user)
         if(userSaved.palettes.length < 5) {
             await userSaved.updateOne({$push: {palettes: palette}})        
         }else{
@@ -92,10 +91,10 @@ async function savePalette(data) {
 
 async function deleteUser (user) {
     try{
-    middleware.compareFullUser(user)
-    const userSaved = await getUserByUserName(user.name)
-    if(!userSaved) throw new Error('User does not exist')
-    await userSaved.deleteOne()
+        const userSaved = await getUserByUserName(user)
+        middleware.compareFullUser(userSaved)
+        if(!userSaved) throw new Error('User does not exist')
+        await userSaved.deleteOne()
     }catch(err){
         throw new Error(err)
     }

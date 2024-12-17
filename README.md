@@ -28,14 +28,14 @@ User:
 |---------|----------|-------------|------------|----------|------------|-------------|
 |POST|/register|201|400|username,email,pasword||Create a user in the color application|
 |POST|/login|200|404,401|username,password||Log in the user by logging into the color application|
-|POST|/logout|200|400,401|closes the user session from the application color|
-|POST|/save|200|400,401|saves a palette to the user, the application needs to be passed a palette|
-|DELETE|/delette|200|401,404|removes the user from the colorss application, you need to pass the user through the req.body|
-|PUT|/:user/modify/name|200|400,401|Modify the username, the new username needs to be passed to the application via req.body and the user via params|
-|PUT|/:user/modify/email|200|400,401|Modify the email, the new email needs to be passed to the application via req.body and the user via params|
-|PUT|/:user/modify/password|200|400,401|Modify the password, the new username needs to be passed to the application via req.body and the user via params|
-|GET|/:user/palettes|200|400,401|
-|GET|/:user/:palette|200|400,401|
-|DELETE|/:user/:palette/delete|200|400,404,401|
-|PUT|/:user/:palette/modifyName|200|400,401|
-|POST|/:user/sendRecoveryEmail|200|400|
+|POST|/logout|200|400,401|||closes the user session from the application color|
+|POST|/:user/save|200|400,401|palette|user|saves a palette to the user|
+|DELETE|/delette|200|401,404||user|removes the user from the colorss application|
+|PUT|/:user/modify/name|200|400,401|new username|user|Modify the username|
+|PUT|/:user/modify/email|200|400,401|new email|user|Modify the email|
+|PUT|/:user/modify/password|200|400,401|new password|user|Modify the password|
+|GET|/:user/palettes|200|400,401||user|Gets the palettes saved in the user|
+|GET|/:user/:palette|200|400,401|palette|user|Get a specific palette|
+|DELETE|/:user/:palette/delete|200|400,404,401||user,palette|Delete a palette in the user|
+|PUT|/:user/:palette/modifyName|200|400,401|new palette name|user,palette|Modifies the name of a palette saved in the user|
+|POST|/:user/sendRecoveryEmail|200|400||user|send a recovery email|

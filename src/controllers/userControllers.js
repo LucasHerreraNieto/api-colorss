@@ -44,7 +44,7 @@ exports.logout = async (req, res) =>{
 
 exports.savePalette = async (req, res) =>{
     try{
-    await userServices.savePalette(req.body)
+    await userServices.savePalette(req.params.user,req.body)
     res.status(200).json({message: 'Palette saved'})
     }catch(err){
         res.status(400).json({message:err.message})
@@ -72,7 +72,7 @@ exports.modifyUserEmail = async (req, res) =>{
 
 exports.deleteUser = async (req, res) =>{
     try{
-    await userServices.deleteUser(req.body)
+    await userServices.deleteUser(req.params.user)
     res.status(200).json({message: 'User deleted'})
     }catch(err){
         if(err.message === 'User does not exist'){
