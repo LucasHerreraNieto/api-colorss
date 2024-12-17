@@ -59,3 +59,11 @@ Para instalar y configurar el sistema, sigue estos pasos:
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/LucasHerreraNieto/api-colorss.git
+
+2. instalar las dependencias:
+    ```bash
+    npm install
+
+3. Correr la aplicación:
+    ```bash
+    npm run dev
