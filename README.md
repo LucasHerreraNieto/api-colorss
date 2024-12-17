@@ -24,16 +24,16 @@
 
 User:
 
-| Methods | Endpoint | Status Code | Error Code | Description |
-|---------|----------|-------------|------------|-------------|
-|POST|/register|201|400|Create a user in the color application, the application needs to bepassed a username, an email and a password, which will be passed through the req.body|
-|POST|/login|200|404,401|
-|POST|/logout|200|400,401|
-|POST|/save|200|400,401|
-|DELETE|/delette|200|401,404|
-|PUT|/:user/modify/name|200|400,401|
-|PUT|/:user/modify/email|200|400,401|
-|PUT|/:user/modify/password|200|400,401|
+| Methods | Endpoint | Status Code | Error Code | req.body | req.params | Description |
+|---------|----------|-------------|------------|----------|------------|-------------|
+|POST|/register|201|400|username,email,pasword||Create a user in the color application|
+|POST|/login|200|404,401|username,password||Log in the user by logging into the color application|
+|POST|/logout|200|400,401|closes the user session from the application color|
+|POST|/save|200|400,401|saves a palette to the user, the application needs to be passed a palette|
+|DELETE|/delette|200|401,404|removes the user from the colorss application, you need to pass the user through the req.body|
+|PUT|/:user/modify/name|200|400,401|Modify the username, the new username needs to be passed to the application via req.body and the user via params|
+|PUT|/:user/modify/email|200|400,401|Modify the email, the new email needs to be passed to the application via req.body and the user via params|
+|PUT|/:user/modify/password|200|400,401|Modify the password, the new username needs to be passed to the application via req.body and the user via params|
 |GET|/:user/palettes|200|400,401|
 |GET|/:user/:palette|200|400,401|
 |DELETE|/:user/:palette/delete|200|400,404,401|
