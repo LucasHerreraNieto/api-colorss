@@ -19,21 +19,38 @@ Bienvenido a nuestro sistema de generación de paletas de colores. Esta aplicaci
 
 Aquí se detalla la lista de endpoints disponibles en la API, junto con sus métodos, códigos de estado y descripciones.
 
+### Autenticación
+
+| Método | Endpoint     | Código de Estado | Código de Error | `req.body`               | `req.params` | Descripción                                                      |
+|--------|--------------|------------------|-----------------|--------------------------|--------------|------------------------------------------------------------------|
+| POST   | `/register`  | 200              | 400             | `username`, `email`, `password` |              | Crea un nuevo usuario en la aplicación                           |
+| POST   | `/login`     | 200              | 400, 401        | `username`, `password`   |              | Inicia sesión del usuario en la aplicación                       |
+| POST   | `/logout`    | 200              | 400             |                          |              | Cierra sesión del usuario en la aplicación                       |
+
+### Gestión de Paletas
+
 | Método | Endpoint                       | Código de Estado | Código de Error | `req.body`       | `req.params` | Descripción                                                            |
 |--------|--------------------------------|------------------|-----------------|------------------|--------------|------------------------------------------------------------------------|
-| POST   | `/register`                    | 200              | 400             | `username`, `email`, `password` |              | Crea un nuevo usuario en la aplicación                                 |
-| POST   | `/login`                       | 200              | 400, 401        | `username`, `password`            |              | Inicia sesión del usuario en la aplicación                             |
-| POST   | `/logout`                      | 200              | 400             |                  |              | Cierra sesión del usuario en la aplicación                             |
-| POST   | `/save/palette`                | 200              | 400, 401        | `palette`                       | `user`       | Guarda una paleta de colores en la base de datos del usuario           |
+| POST   | `/save/palette`                | 200              | 400, 401        | `palette`        | `user`       | Guarda una paleta de colores en la base de datos del usuario           |
 | DELETE | `/delete`                      | 200              | 400, 404        |                  | `user`       | Elimina una paleta de colores de la base de datos del usuario          |
-| PUT    | `/save/modify/name`            | 200              | 400, 401        | `new name`                      | `user`       | Modifica el nombre de una paleta de colores en la base de datos        |
-| PUT    | `/save/modify/personal`        | 200              | 400, 401        | `new name`                      | `user`       | Modifica detalles personalizados de una paleta en la base de datos     |
-| GET    | `/save`                        | 200              | 400, 401        |                                  | `user`       | Obtiene todas las paletas de colores guardadas en la base de datos     |
-| GET    | `/save/palette`                | 200              | 400, 401        |                                  | `user`       | Obtiene una paleta de colores específica guardada en la base de datos  |
-| DELETE | `/save/palette/delete`         | 200              | 400, 404        |                                  | `user`       | Elimina una paleta de colores específica guardada en la base de datos  |
-| PUT    | `/save/palette/modify/name`    | 200              | 400, 401        | `new name`                      | `user`       | Modifica el nombre de una paleta específica guardada en la base de datos |
-| PUT    | `/save/palette/modify/personal`| 200              | 400, 401        | `new name`                      | `user`       | Modifica detalles personalizados de una paleta guardada en la base de datos |
-| POST   | `/save/send/occupy/email`      | 200              | 400             | `email`                         | `user`       | Envía una paleta de colores guardada por correo electrónico            |
+| PUT    | `/save/modify/name`            | 200              | 400, 401        | `new name`       | `user`       | Modifica el nombre de una paleta de colores en la base de datos        |
+| PUT    | `/save/modify/personal`        | 200              | 400, 401        | `new name`       | `user`       | Modifica detalles personalizados de una paleta en la base de datos     |
+| GET    | `/save`                        | 200              | 400, 401        |                  | `user`       | Obtiene todas las paletas de colores guardadas en la base de datos     |
+| GET    | `/save/palette`                | 200              | 400, 401        |                  | `user`       | Obtiene una paleta de colores específica guardada en la base de datos  |
+| DELETE | `/save/palette/delete`         | 200              | 400, 404        |                  | `user`       | Elimina una paleta de colores específica guardada en la base de datos  |
+| PUT    | `/save/palette/modify/name`    | 200              | 400, 401        | `new name`       | `user`       | Modifica el nombre de una paleta específica guardada en la base de datos |
+| PUT    | `/save/palette/modify/personal`| 200              | 400, 401        | `new name`       | `user`       | Modifica detalles personalizados de una paleta guardada en la base de datos |
+| POST   | `/save/send/occupy/email`      | 200              | 400             | `email`          | `user`       | Envía una paleta de colores guardada por correo electrónico            |
+
+### Gestión de Paletas Adicional
+
+| Método | Endpoint        | Código de Estado | Código de Error | `req.body`          | `req.params` | Descripción                                                         |
+|--------|-----------------|------------------|-----------------|---------------------|--------------|---------------------------------------------------------------------|
+| GET    | `/palettes`     | 200              | 400             | `amount`            |              | Obtiene paletas de colores aleatorias                               |
+| GET    | `/paletteEmpty` | 200              | 400             |                     |              | Obtiene una paleta de colores vacía                                 |
+| GET    | `/paletteSearch`| 200              | 400             | `color`, `amount`, `category` |    | Realiza una búsqueda de paletas de colores por categoría           |
+| PUT    | `/modifyPalette`| 200              | 400             | `color`, `palette`  |              | Modifica una paleta de colores                                      |
+| POST   | `/paletteCreated`| 200             | 400             | `colors list`       |              | Crea una paleta de colores a partir de una lista de colores         |
 
 ## Instalación
 
@@ -42,13 +59,3 @@ Para instalar y configurar el sistema, sigue estos pasos:
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/tu-usuario/tu-repositorio.git
-
-Palette:
-
-| Methods | Endpoint | Status Code | Error Code | req.body | req.params | Description |
-|---------|----------|-------------|------------|----------|------------|-------------|
-|GET|/palettes|200|400|amount||get random color palettes|
-|GET|/paletteEmpty|200|400|||get empty color palette|
-|GET|/paletteSearch|200|400|color, amount, category||perform a search for color palettes by category|
-|PUT|/modifyPalette|200|400|color, palette||modify a palette|
-|POST|/paletteCreated|200|400|colors list||create a color palette from a list of colors|
