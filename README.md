@@ -67,3 +67,13 @@ Para instalar y configurar el sistema, sigue estos pasos:
 3. Correr la aplicación:
     ```bash
     npm run dev
+
+## Contribución
+Si deseas contribuir al proyecto, sigue estos pasos:
+1. Haz un fork del repositorio.
+
+2. Crea una nueva rama (feature/nueva-funcionalidad).
+
+3. Realiza tus cambios y commitea.
+
+4. Envía un pull request.
