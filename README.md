@@ -58,4 +58,4 @@ Para instalar y configurar el sistema, sigue estos pasos:
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/tu-repositorio.git
+   git clone https://github.com/LucasHerreraNieto/api-colorss.git
