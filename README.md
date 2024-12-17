@@ -26,8 +26,7 @@ User:
 
 | Methods | Endpoint | Status Code | Error Code | Description |
 |---------|----------|-------------|------------|-------------|
-|POST|/register|201|400|
-Create a user in the color application, the application needs to be passed a username, an email and a password, which will be passed through the req.body|
+|POST|/register|201|400|Create a user in the color application, the application needs to bepassed a username, an email and a password, which will be passed through the req.body|
 |POST|/login|200|404,401|
 |POST|/logout|200|400,401|
 |POST|/save|200|400,401|
