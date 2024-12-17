@@ -23,4 +23,5 @@
 
 
 
-|Methods|Endpoint|StatusCode|ErrorCode|Description|
+| Methods | Endpoint | Status Code | Error Code | Description |
+|---------|----------|-------------|------------|-------------|
