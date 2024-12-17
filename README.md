@@ -26,8 +26,8 @@ User:
 
 | Methods | Endpoint | Status Code | Error Code | req.body | req.params | Description |
 |---------|----------|-------------|------------|----------|------------|-------------|
-|POST|/register|201|400|username,email,pasword||Create a user in the color application|
-|POST|/login|200|404,401|username,password||Log in the user by logging into the color application|
+|POST|/register|201|400|username, email, pasword||Create a user in the color application|
+|POST|/login|200|404,401|username, password||Log in the user by logging into the color application|
 |POST|/logout|200|400,401|||closes the user session from the application color|
 |POST|/:user/save|200|400,401|palette|user|saves a palette to the user|
 |DELETE|/delette|200|401,404||user|removes the user from the colorss application|
@@ -36,6 +36,6 @@ User:
 |PUT|/:user/modify/password|200|400,401|new password|user|Modify the password|
 |GET|/:user/palettes|200|400,401||user|Gets the palettes saved in the user|
 |GET|/:user/:palette|200|400,401|palette|user|Get a specific palette|
-|DELETE|/:user/:palette/delete|200|400,404,401||user,palette|Delete a palette in the user|
-|PUT|/:user/:palette/modifyName|200|400,401|new palette name|user,palette|Modifies the name of a palette saved in the user|
+|DELETE|/:user/:palette/delete|200|400,404,401||user, palette|Delete a palette in the user|
+|PUT|/:user/:palette/modifyName|200|400,401|new palette name|user, palette|Modifies the name of a palette saved in the user|
 |POST|/:user/sendRecoveryEmail|200|400||user|send a recovery email|
