@@ -206,7 +206,6 @@ module.exports = {
     deletePalette,
     modifyPaletteName,
     getPalette,
-    changePassword,
     sendRecoveryEmail,
     logout
 }

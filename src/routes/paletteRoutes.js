@@ -7,7 +7,7 @@ router.get('/palettes',middleware.verifyToken, paletteControllers.returnPalettes
 
 router.get('/paletteEmpty',middleware.verifyToken, paletteControllers.returnPaletteEmpty)
 
-router.get('/paletteSearch',middleware.verifyToken,paletteControllers.searchPalette)
+router.get('/paletteSearch/:category',middleware.verifyToken,paletteControllers.searchPalette)
 
 router.put('/modifyPalette',middleware.verifyToken, paletteControllers.modifyPalette)
 

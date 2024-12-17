@@ -119,9 +119,9 @@ exports.modifyPaletteName = async (req,res) => {
     }
 }
 
-exports.changePassword = async (req,res) => {
+exports.modifyUserPassword = async (req,res) => {
     try{
-    const palettes = await userServices.changePassword(req.params.user, req.body.oldPassword, req.body.newPassword)
+    const palettes = await userServices.modifyUserPassword(req.params.user, req.body.oldPassword, req.body.newPassword)
     res.status(200).json({message: palettes})
     }catch(err){
         res.status(400).json({message:err.message})

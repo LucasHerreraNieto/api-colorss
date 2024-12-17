@@ -32,8 +32,8 @@ async function generatePalettesBySearchColors(color, amount) {
     }
 }
 
-async function modifyPalette(palette, color,i) {
-    
+async function modifyPalette(body) {
+    const {palette,color} = body
     palette.modifyColor(color)
 }
 

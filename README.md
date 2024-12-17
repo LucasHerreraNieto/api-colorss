@@ -39,3 +39,13 @@ User:
 |DELETE|/:user/:palette/delete|200|400,404,401||user, palette|Delete a palette in the user|
 |PUT|/:user/:palette/modifyName|200|400,401|new palette name|user, palette|Modifies the name of a palette saved in the user|
 |POST|/:user/sendRecoveryEmail|200|400||user|send a recovery email|
+
+Palette:
+
+| Methods | Endpoint | Status Code | Error Code | req.body | req.params | Description |
+|---------|----------|-------------|------------|----------|------------|-------------|
+|GET|/palettes|200|400|amount||get random color palettes|
+|GET|/paletteEmpty|200|400|||get empty color palette|
+|GET|/paletteSearch|200|400|color, amount, category||perform a search for color palettes by category|
+|PUT|/modifyPalette|200|400|color, palette||modify a palette|
+|POST|/paletteCreated|200|400|colors list||create a color palette from a list of colors|
