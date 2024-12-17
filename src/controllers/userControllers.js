@@ -4,8 +4,7 @@ const userServices = require('../services/userServices')
 exports.register = async (req,res) =>{
     try{
         newUser = await userServices.registerUser(req.body)    
-    
-        res.status(201).json({message: 'User registered '+ newUser})
+        res.status(201).json(newUser)
     }catch(err){
         res.status(400).json({message: err.message})
     }
@@ -23,7 +22,7 @@ exports.login = async (req, res) =>{
         // Enviar la respuesta JSON 
         res.status(200).json({ message: 'User logged in ' + loggedUser.name });
     }catch(err){
-        if(err.message === 'User does not exist'){
+        if(err.message === 'Error: User does not exist'){
             res.status(404).json({message:err.message})
         }else{
             res.status(401).json({message:err.message})
@@ -109,7 +108,7 @@ exports.deletePalette = async (req, res) =>{
         if(err.message === 'Palette does not exist'){
             res.status(404).json({message:err.message})
         }else{
-            res.status(400).json({message:err.message})
+        res.status(400).json({message:err.message})
         }
     }
 }

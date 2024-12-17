@@ -29,7 +29,7 @@ async function registerUser(user) {
             })
             await newUser.save()
             console.log('User registered')
-            return newUser.name
+            return  newUser.name
         } catch (error) {
             throw new Error(error.message)
         }
