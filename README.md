@@ -1,44 +1,47 @@
-## Colorss
--Necesitamos una sistema de software que tendra la funcionalidad enfocada en la generacion de paletas de forma automatica tanto como de forma manual con los colores que pueden ser modificados y cada paleta debe poder ser guardada en un usuario que esta registrado en la aplicacion   
+# Sistema de Generación de Paletas de Colores - COLORSS
 
--Los usuarios que utilizaran el sistema son las diferentes personas que ingresaran a la aplicacion con la necesidad de generar una paleta de colores  
+Bienvenido a nuestro sistema de generación de paletas de colores. Esta aplicación ofrece una variedad de funcionalidades para crear, modificar y almacenar paletas de colores de manera eficiente.
 
--Los usuarios utilizaran el sistema como una fuente de obtencion de ideas sobre una paleta de colores, generando tanto automaticamente como de forma manual, los usuarios al ver alguna paleta de su gusto tendra la posibilidad de guardar la paleta seleccionada en su usuario  
+## Funcionalidades
 
--Las paletas de colores deben estar generadas por diferentes categorias por ej: colores complementarios, degradados,etc.  
+- **Generación Automática de Paletas**: Permite la generación automática de paletas de colores, así como la opción de modificar y personalizar dichas paletas.
+- **Almacenamiento en Base de Datos**: Los usuarios pueden almacenar sus paletas de colores en una base de datos, facilitando el acceso y la gestión.
+- **Relleno Automático de Canvas**: Automáticamente llena un canvas con una paleta de colores seleccionada, con la opción de elegir una paleta aleatoria.
+- **Categorías de Colores**: Las paletas se pueden categorizar para un mejor manejo y organización.
+- **Soporte para HEX y RGB**: Los usuarios pueden elegir colores en formatos HEX y RGB.
+- **Saturación y Variación**: Permite la elección de paletas de colores según su saturación y variaciones.
+- **Límite de Paletas Guardadas**: Los usuarios pueden guardar hasta 5 paletas diferentes, cada una con configuraciones personalizadas.
+- **Exportación de Paletas**: Exporta las paletas en formatos PDF, PNG y SVG.
+- **Paletas Predefinidas**: El sistema ofrece paletas predefinidas para facilitar la elección.
+- **Acceso Restringido**: Los usuarios tienen datos de acceso restringidos para mayor seguridad.
 
--El formato de los colores sera HEX y RGB   
+## Endpoints de la API
 
--El usuario se debera registrar con un nombre de usuario y una contraseña, todos los usuarios tendran el mismo nivel de acceso en el sistema  
-  
--El usuario podra guardar una cantidad maxima de 5 paletas diferentes a cada paleta se puede personalizar su nombre, y pueden ser agrupadas sengun la clasificacion del usuario  
+Aquí se detalla la lista de endpoints disponibles en la API, junto con sus métodos, códigos de estado y descripciones.
 
--Los usuarios podran realizar una busqueda con colores que el usuario quiera que esten en la aplicacion  
+| Método | Endpoint                       | Código de Estado | Código de Error | `req.body`       | `req.params` | Descripción                                                            |
+|--------|--------------------------------|------------------|-----------------|------------------|--------------|------------------------------------------------------------------------|
+| POST   | `/register`                    | 200              | 400             | `username`, `email`, `password` |              | Crea un nuevo usuario en la aplicación                                 |
+| POST   | `/login`                       | 200              | 400, 401        | `username`, `password`            |              | Inicia sesión del usuario en la aplicación                             |
+| POST   | `/logout`                      | 200              | 400             |                  |              | Cierra sesión del usuario en la aplicación                             |
+| POST   | `/save/palette`                | 200              | 400, 401        | `palette`                       | `user`       | Guarda una paleta de colores en la base de datos del usuario           |
+| DELETE | `/delete`                      | 200              | 400, 404        |                  | `user`       | Elimina una paleta de colores de la base de datos del usuario          |
+| PUT    | `/save/modify/name`            | 200              | 400, 401        | `new name`                      | `user`       | Modifica el nombre de una paleta de colores en la base de datos        |
+| PUT    | `/save/modify/personal`        | 200              | 400, 401        | `new name`                      | `user`       | Modifica detalles personalizados de una paleta en la base de datos     |
+| GET    | `/save`                        | 200              | 400, 401        |                                  | `user`       | Obtiene todas las paletas de colores guardadas en la base de datos     |
+| GET    | `/save/palette`                | 200              | 400, 401        |                                  | `user`       | Obtiene una paleta de colores específica guardada en la base de datos  |
+| DELETE | `/save/palette/delete`         | 200              | 400, 404        |                                  | `user`       | Elimina una paleta de colores específica guardada en la base de datos  |
+| PUT    | `/save/palette/modify/name`    | 200              | 400, 401        | `new name`                      | `user`       | Modifica el nombre de una paleta específica guardada en la base de datos |
+| PUT    | `/save/palette/modify/personal`| 200              | 400, 401        | `new name`                      | `user`       | Modifica detalles personalizados de una paleta guardada en la base de datos |
+| POST   | `/save/send/occupy/email`      | 200              | 400             | `email`                         | `user`       | Envía una paleta de colores guardada por correo electrónico            |
 
--Los usuarios tendran la capacidad de exportar en formato PDF, PNG y CSS  
+## Instalación
 
--La aplicacion debe contar con escabilidad para poder agregar mas funcionalidades en el futuro  
+Para instalar y configurar el sistema, sigue estos pasos:
 
--los datos del usuario deben estar encriptados para su mayor proteccion tambien se deben usuar coockies para mayor 
-
-
-User:
-
-| Methods | Endpoint | Status Code | Error Code | req.body | req.params | Description |
-|---------|----------|-------------|------------|----------|------------|-------------|
-|POST|/register|201|400|username, email, pasword||Create a user in the color application|
-|POST|/login|200|404,401|username, password||Log in the user by logging into the color application|
-|POST|/logout|200|400,401|||closes the user session from the application color|
-|POST|/:user/save|200|400,401|palette|user|saves a palette to the user|
-|DELETE|/delette|200|401,404||user|removes the user from the colorss application|
-|PUT|/:user/modify/name|200|400,401|new username|user|Modify the username|
-|PUT|/:user/modify/email|200|400,401|new email|user|Modify the email|
-|PUT|/:user/modify/password|200|400,401|new password|user|Modify the password|
-|GET|/:user/palettes|200|400,401||user|Gets the palettes saved in the user|
-|GET|/:user/:palette|200|400,401|palette|user|Get a specific palette|
-|DELETE|/:user/:palette/delete|200|400,404,401||user, palette|Delete a palette in the user|
-|PUT|/:user/:palette/modifyName|200|400,401|new palette name|user, palette|Modifies the name of a palette saved in the user|
-|POST|/:user/sendRecoveryEmail|200|400||user|send a recovery email|
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/tu-repositorio.git
 
 Palette:
 
