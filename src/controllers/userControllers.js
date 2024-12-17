@@ -1,4 +1,3 @@
-const { param } = require('../routes/userRoutes')
 const userServices = require('../services/userServices')
 
 
@@ -14,8 +13,15 @@ exports.register = async (req,res) =>{
 
 exports.login = async (req, res) =>{
     try{
-    loggedUser = await  userServices.loginUser(req.body)
-    res.status(200).json({message: 'User logged in ' + loggedUser})
+        const loggedUser = await userServices.loginUser(req.body); // Configurar la cookie 
+        res.cookie('token', loggedUser.token, { 
+            httpOnly: true,  
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'strict', 
+            maxAge: 3600000 
+        }); 
+        // Enviar la respuesta JSON 
+        res.status(200).json({ message: 'User logged in ' + loggedUser.name });
     }catch(err){
         res.status(400).json({message:err.message})
     }
@@ -81,7 +87,7 @@ exports.getPalettes = async (req, res) =>{
     }
 }
 
-exports.getPalettes = async (req, res) =>{
+exports.getPalette = async (req, res) =>{
     try{
     const palettes = await userServices.getPalette(req.params.user,req.params.palette)
     res.status(200).json({message: palettes})
@@ -103,6 +109,24 @@ exports.modifyPaletteName = async (req,res) => {
     try{
     const palettes = await userServices.modifyPaletteName(req.params.user, req.params.palette, req.body.newName)
     res.status(200).json({message: palettes})
+    }catch(err){
+        res.status(400).json({message:err.message})
+    }
+}
+
+exports.changePassword = async (req,res) => {
+    try{
+    const palettes = await userServices.changePassword(req.params.user, req.body.oldPassword, req.body.newPassword)
+    res.status(200).json({message: palettes})
+    }catch(err){
+        res.status(400).json({message:err.message})
+    }
+}
+
+exports.sendRecoveryEmail = async (req,res) =>{
+    try{
+    const recoveryEmail = await userServices.sendRecoveryEmail(req.params.user)
+    res.status(200).json({message:"Recovery email sent"})
     }catch(err){
         res.status(400).json({message:err.message})
     }

@@ -42,11 +42,21 @@ async function modifyPaletteName(req) {
     palette.changeName(name)
 }
 
+async function paletteSearch(category,color,amount) {
+    const palettes = []
+    for(let i = 0; i < amount; i++) {
+        const palette = new Palette(category,color)
+        palettes.push(palette)
+    }
+    return palettes
+}
+
 module.exports = {
     returnPalettes,
     returnPaletteEmpty,
     completePalette,
     generatePalettesBySearchColors,
     modifyPalette,
-    modifyPaletteName
+    modifyPaletteName,
+    paletteSearch
 }

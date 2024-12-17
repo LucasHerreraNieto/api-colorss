@@ -28,19 +28,20 @@ exports.colorPalette = async (req, res) =>{
     }
 }
 
-exports.generatePaletteBySearchColors = async (req, res) =>{
-    try{
-        const palettes = await paletteService.generatePalettesBySearchColors(req.body)
-        res.json(palettes)
-    }catch(err){
-        res.status(400).json({message:err.message})
-    }
-}
 
 exports.modifyPalette = async (req, res) =>{
     try{
         const palette = await paletteService.modifyPalette(req.body)
         res.json(palette)
+    }catch(err){
+        res.status(400).json({message:err.message})
+    }
+}
+
+exports.searchPalette = async (req, res) =>{
+    try{
+        const palettes = await paletteService.paletteSearch(req.params.category,req.body.color,req.body.amount)
+        res.json(palettes)
     }catch(err){
         res.status(400).json({message:err.message})
     }

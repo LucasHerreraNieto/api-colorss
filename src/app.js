@@ -10,12 +10,21 @@ const {connectDB} = require('./db/configs/conecct-mongoDB')
 // export body parser
 const bodyParser = require('body-parser')
 
+const cookieParser = require('cookie-parser')
+
 //connect to database
 connectDB()
 
 const app = express()
 
 app.use(bodyParser.json())
+
+app.use(cookieParser())
+
+app.use(cors({
+    origin: 'XXXXXXXXXXXXXXXXXXXXX',
+    credentials: true
+}))
 
 const PORT = process.env.PORT || 3000
 

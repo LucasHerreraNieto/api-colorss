@@ -19,4 +19,7 @@
 
 -La aplicacion debe contar con escabilidad para poder agregar mas funcionalidades en el futuro  
 
--los datos del usuario deben estar encriptados para su mayor proteccion tambien se deben usuar coockies para mayor seguridad
+-los datos del usuario deben estar encriptados para su mayor proteccion tambien se deben usuar coockies para mayor 
+
+
+

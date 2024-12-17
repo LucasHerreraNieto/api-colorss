@@ -1,28 +1,33 @@
 const userController = require('../controllers/userControllers')
 const router = require('express').Router()
+const middleware = require('../middlewares/Middlewares.js')
 
 router.post('/register', userController.register)
 
 router.post('/login', userController.login)
 
-router.post('/logout', userController.logout)
+router.post('/logout',middleware.verifyToken,userController.logout)
 
-router.post('/save', userController.savePalette)
+router.post('/save',middleware.verifyToken, userController.savePalette)
 
-router.post('/delete', userController.deleteUser)
+router.delete('/delete',middleware.verifyToken, userController.deleteUser)
 
-router.post('/:user/modify/name', userController.modifyUserName)
+router.put('/:user/modify/name',middleware.verifyToken, userController.modifyUserName)
 
-router.post('/:user/modify/email', userController.modifyUserEmail)
+router.put('/:user/modify/email',middleware.verifyToken, userController.modifyUserEmail)
 
-router.post('/:user/modify/password', userController.modifyUserPassword)
+router.put('/:user/modify/password',middleware.verifyToken, userController.modifyUserPassword)
 
-router.get('/:user/palettes', userController.getPalettes)
+router.get('/:user/palettes',middleware.verifyToken, userController.getPalettes)
 
-router.get('/:user/:palette', userController.getPalette)
+router.get('/:user/:palette',middleware.verifyToken, userController.getPalette)
 
-router.post('/:user/:palette/delete',userController.deletePalette)
+router.delete('/:user/:palette/delete',middleware.verifyToken,userController.deletePalette)
 
-router.post('/:user/:palette/modifyName', userController.modifyPaletteName)
+router.put('/:user/:palette/modifyName',middleware.verifyToken, userController.modifyPaletteName)
+
+router.put('/:user/changePassword', userController.changePassword)
+
+router.post('/:user/sendRecoveryEmail', userController.sendRecoveryEmail)
 
 module.exports = router

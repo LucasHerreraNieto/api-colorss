@@ -1,15 +1,17 @@
 const paletteControllers = require('../controllers/paletteControllers')
 const router = require('express').Router()
+const middleware = require('../middlewares/Middlewares')
 
 
-router.get('/palettes', paletteControllers.returnPalettes)
+router.get('/palettes',middleware.verifyToken, paletteControllers.returnPalettes)
 
-router.get('/paletteEmpty', paletteControllers.returnPaletteEmpty)
+router.get('/paletteEmpty',middleware.verifyToken, paletteControllers.returnPaletteEmpty)
 
-router.get('/paletteSearch',paletteControllers.generatePaletteBySearchColors)
+router.get('/paletteSearch',middleware.verifyToken,paletteControllers.searchPalette)
 
-router.post('/modifyPalette', paletteControllers.modifyPalette)
+router.put('/modifyPalette',middleware.verifyToken, paletteControllers.modifyPalette)
 
-router.post('/paletteCreated', paletteControllers.colorPalette)
+router.post('/paletteCreated',middleware.verifyToken, paletteControllers.colorPalette)
+
 
 module.exports = router

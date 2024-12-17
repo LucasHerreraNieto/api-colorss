@@ -9,5 +9,7 @@ const UserSchema = new Schema({
   palettes: Array
 })
 
+
+
 const UserModel = mongoose.model('User', UserSchema)
 module.exports = {UserModel}

@@ -1,7 +1,8 @@
 const {UserModel} = require('../db/models/User.js');
 const bcrypt = require('bcrypt');
 const middleware = require('../middlewares/Middlewares.js');
-const { get } = require('mongoose');
+const jwt = require('jsonwebtoken');
+
 
 userLogged = false;
 
@@ -47,8 +48,9 @@ async function loginUser(user) {
         const passwordMatch = await bcrypt.compare(user.password, userExist.password)
         if(passwordMatch) {
             userLogged = true
+            const token = jwt.sign({name: userExist.name}, process.env.JWT_SECRET, {expiresIn: '1h'})
             console.log('User logged in')
-            return userExist.name
+            return {name: userExist.name, token: token} // Return the user name and token
         }else{
             throw new Error('Wrong password')
         }
@@ -172,6 +174,35 @@ async function modifyPaletteName(user,palette,newName) {
     }
 }
 
+async function changePassword(user,password) {
+    try{
+    const userSaved = await getUserByUserName(user.name)
+    if(!userSaved) throw new Error('User does not exist')
+    const newPassword = await bcrypt.hash(password.newPassword, 10)
+    await userSaved.updateOne({$set: {password: newPassword}})
+    }catch(err){
+        throw new Error(err)
+    }
+}
+
+async function sendRecoveryEmail(user){
+    try{
+    const userSaved = await getUserByUserName(user.name)
+    if(!userSaved) throw new Error('User does not exist')
+    const token = jwt.sign({name: userSaved.name}, process.env.JWT_SECRET, {expiresIn: '1h'})
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: userSaved.email,
+        subject: 'Password recovery',
+        text: `Click here to recover your password: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX${token}`
+    }
+    await middleware.transporter.sendMail(mailOptions)
+    }catch(err){
+        throw new Error(err)
+    }
+
+}
+
 module.exports = {
     getUserByUserName,
     registerUser,
@@ -182,7 +213,9 @@ module.exports = {
     modifyUserEmail,
     modifyUserPassword,
     getPalettes,
-    getPalette,
     deletePalette,
-    modifyPaletteName
+    modifyPaletteName,
+    getPalette,
+    changePassword,
+    sendRecoveryEmail
 }
