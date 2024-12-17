@@ -124,7 +124,13 @@ exports.modifyUserPassword = async (req,res) => {
     const palettes = await userServices.modifyUserPassword(req.params.user, req.body.oldPassword, req.body.newPassword)
     res.status(200).json({message: palettes})
     }catch(err){
+        if(err.message === 'Wrong password'){
+            res.status(401).json({message:err.message})
+        }else if(err.message === 'User does not exist'){
+            res.status(404).json({message:err.message})
+        }else{
         res.status(400).json({message:err.message})
+        }
     }
 }
 

@@ -8,7 +8,7 @@ router.post('/login', userController.login)
 
 router.post('/logout',middleware.verifyToken,userController.logout)
 
-router.post('/:user/save',middleware.verifyToken, userController.savePalette)
+router.post('/:user/palette/save',middleware.verifyToken, userController.savePalette)
 
 router.delete('/:user/delete',middleware.verifyToken, userController.deleteUser)
 
