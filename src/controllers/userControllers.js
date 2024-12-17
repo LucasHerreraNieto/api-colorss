@@ -5,7 +5,7 @@ exports.register = async (req,res) =>{
     try{
         newUser = await userServices.registerUser(req.body)    
     
-        res.status(200).json({message: 'User registered '+ newUser})
+        res.status(201).json({message: 'User registered '+ newUser})
     }catch(err){
         res.status(400).json({message: err.message})
     }
@@ -13,7 +13,7 @@ exports.register = async (req,res) =>{
 
 exports.login = async (req, res) =>{
     try{
-        const loggedUser = await userServices.loginUser(req.body); // Configurar la cookie 
+        const loggedUser = await userServices.loginUser(req.body); 
         res.cookie('token', loggedUser.token, { 
             httpOnly: true,  
             secure: process.env.NODE_ENV === 'production', 
@@ -23,14 +23,23 @@ exports.login = async (req, res) =>{
         // Enviar la respuesta JSON 
         res.status(200).json({ message: 'User logged in ' + loggedUser.name });
     }catch(err){
-        res.status(400).json({message:err.message})
+        if(err.message === 'User does not exist'){
+            res.status(404).json({message:err.message})
+        }else{
+            res.status(401).json({message:err.message})
+        }
+        
     }
 }
 
 exports.logout = async (req, res) =>{
-    res.json({
-        message: "Hello from logout"
-    })
+    try{
+        const cookie = await userServices.logout(req.cookies)
+        res.clearCookie('token', cookie)
+        res.status(200).json({message: 'User logged out'})
+    }catch(err){
+        res.status(400).json({message:err.message})
+    }
 }
 
 exports.savePalette = async (req, res) =>{
@@ -60,21 +69,17 @@ exports.modifyUserEmail = async (req, res) =>{
     }
 }
 
-exports.modifyUserPassword = async (req, res) =>{
-    try{
-    await userServices.modifyUserPassword(req.params.user,req.body.password)
-    res.status(200).json({message: 'User password modified'})
-    }catch(err){
-        res.status(400).json({message:err.message})
-    }
-}
 
 exports.deleteUser = async (req, res) =>{
     try{
     await userServices.deleteUser(req.body)
     res.status(200).json({message: 'User deleted'})
     }catch(err){
-        res.status(400).json({message:err.message})
+        if(err.message === 'User does not exist'){
+        res.status(404).json({message:err.message})
+        }else{
+            res.status(401).json({message:err.message})
+        }
     }
 }
 

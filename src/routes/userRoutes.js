@@ -26,8 +26,6 @@ router.delete('/:user/:palette/delete',middleware.verifyToken,userController.del
 
 router.put('/:user/:palette/modifyName',middleware.verifyToken, userController.modifyPaletteName)
 
-router.put('/:user/changePassword', userController.changePassword)
-
 router.post('/:user/sendRecoveryEmail', userController.sendRecoveryEmail)
 
 module.exports = router

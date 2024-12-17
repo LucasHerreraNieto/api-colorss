@@ -22,6 +22,21 @@
 -los datos del usuario deben estar encriptados para su mayor proteccion tambien se deben usuar coockies para mayor 
 
 
+User:
 
 | Methods | Endpoint | Status Code | Error Code | Description |
 |---------|----------|-------------|------------|-------------|
+|POST|/register|201|400|
+Create a user in the color application, the application needs to be passed a username, an email and a password, which will be passed through the req.body|
+|POST|/login|200|404,401|
+|POST|/logout|200|400,401|
+|POST|/save|200|400,401|
+|DELETE|/delette|200|401,404|
+|PUT|/:user/modify/name|200|400,401|
+|PUT|/:user/modify/email|200|400,401|
+|PUT|/:user/modify/password|200|400,401|
+|GET|/:user/palettes|200|400,401|
+|GET|/:user/:palette|200|400,401|
+|DELETE|/:user/:palette/delete|200|400,404,401|
+|PUT|/:user/:palette/modifyName|200|400,401|
+|POST|/:user/sendRecoveryEmail|200|400|

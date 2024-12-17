@@ -4,7 +4,6 @@ const middleware = require('../middlewares/Middlewares.js');
 const jwt = require('jsonwebtoken');
 
 
-userLogged = false;
 
 // Find user by Username
 async function getUserByUserName (name) {
@@ -47,7 +46,6 @@ async function loginUser(user) {
     if(userExist) {
         const passwordMatch = await bcrypt.compare(user.password, userExist.password)
         if(passwordMatch) {
-            userLogged = true
             const token = jwt.sign({name: userExist.name}, process.env.JWT_SECRET, {expiresIn: '1h'})
             console.log('User logged in')
             return {name: userExist.name, token: token} // Return the user name and token
@@ -60,6 +58,22 @@ async function loginUser(user) {
     }catch(err){
         throw new Error(err)
     }
+}
+
+async function logout(cookie) {
+    try{
+        return cookie.replace('token=','',
+            {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none',
+                maxAge: 0
+            }
+        )   
+    }catch(err){
+        throw new Error(err)
+    }
+    
 }
 
 async function savePalette(data) {
@@ -89,16 +103,12 @@ async function deleteUser (user) {
 
 async function modifyUserName (user, newName) {
     try{
-        if(userLogged){
             const userName= user.name     
             const userSaved = await getUserByUserName(userName)
             if(!userSaved) throw new Error('User does not exist')
             if(await getUserByUserName(newName)) throw new Error('User already exist')
             await userSaved.updateOne({$set: {name: newName}})
             return userSaved.name
-        }else{
-            throw new Error('User not logged in')
-        }
     }catch(err){
         throw new Error(err)
     }
@@ -106,16 +116,12 @@ async function modifyUserName (user, newName) {
 
 async function modifyUserEmail (user,email) {
     try{
-    if(userLogged){ 
         const userName = user.name
         const userSaved = await getUserByUserName(userName)
         if(!userSaved) throw new Error('User does not exist')
         await userSaved.updateOne({$set: {email: email}})
         middleware.email.parse(email)
         return userSaved.email
-    }else{ 
-        throw new Error('User not logged in')
-    }
     }catch(err){
         throw new Error(err)
     }
@@ -123,16 +129,12 @@ async function modifyUserEmail (user,email) {
 
 async function modifyUserPassword(user,password) {
     try{
-    if(userLogged){ 
         const userName = user.name
         if(password.length < 6) throw new Error('Password must be 6 or more characters long')
         const hashedPassword = await bcrypt.hash(password, 10)
         const userSaved = await getUserByUserName(userName)
         if(!userSaved) throw new Error('User does not exist')
         await userSaved.updateOne({$set: {password: hashedPassword}})
-    }else{
-        throw new Error('User not logged in')
-    }
     }catch(err){
         throw new Error(err)
     }
@@ -174,17 +176,6 @@ async function modifyPaletteName(user,palette,newName) {
     }
 }
 
-async function changePassword(user,password) {
-    try{
-    const userSaved = await getUserByUserName(user.name)
-    if(!userSaved) throw new Error('User does not exist')
-    const newPassword = await bcrypt.hash(password.newPassword, 10)
-    await userSaved.updateOne({$set: {password: newPassword}})
-    }catch(err){
-        throw new Error(err)
-    }
-}
-
 async function sendRecoveryEmail(user){
     try{
     const userSaved = await getUserByUserName(user.name)
@@ -217,5 +208,6 @@ module.exports = {
     modifyPaletteName,
     getPalette,
     changePassword,
-    sendRecoveryEmail
+    sendRecoveryEmail,
+    logout
 }
