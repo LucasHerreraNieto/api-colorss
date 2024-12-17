@@ -155,7 +155,8 @@ async function deletePalette(user, palette){
     try{
         const userSaved = await getUserByUserName(user.name)
         if(!userSaved) throw new Error('User does not exist')
-        if (userSaved.palettes.length === 0) throw new Error()
+        if (userSaved.palettes.length === 0) throw new Error('palettes is empty')
+        if(!userSaved.palettes[palette]) throw new Error('Palette does not exist')
         await userSaved.updateOne({$pull: {palettes: userSaved.palettes[palette]}})
         if(userSaved.nModified) console.log('Palette deleted')
     }catch(err){

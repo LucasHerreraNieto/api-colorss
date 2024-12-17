@@ -75,11 +75,7 @@ exports.deleteUser = async (req, res) =>{
     await userServices.deleteUser(req.params.user)
     res.status(200).json({message: 'User deleted'})
     }catch(err){
-        if(err.message === 'User does not exist'){
-        res.status(404).json({message:err.message})
-        }else{
-            res.status(401).json({message:err.message})
-        }
+        res.status(400).json({message:err.message})
     }
 }
 
@@ -97,7 +93,11 @@ exports.getPalette = async (req, res) =>{
     const palettes = await userServices.getPalette(req.params.user,req.params.palette)
     res.status(200).json({message: palettes})
     }catch(err){
-        res.status(400).json({message:err.message})
+        if(err.message === 'Palette does not exist'){
+            res.status(404).json({message:err.message})
+        }else{
+            res.status(400).json({message:err.message})
+        }
     }
 }
 
@@ -106,7 +106,11 @@ exports.deletePalette = async (req, res) =>{
     const palettes = await userServices.deletePalette(req.params.user, req.params.palette)
     res.status(200).json({message: palettes})
     }catch(err){
-        res.status(400).json({message:err.message})
+        if(err.message === 'Palette does not exist'){
+            res.status(404).json({message:err.message})
+        }else{
+            res.status(400).json({message:err.message})
+        }
     }
 }
 

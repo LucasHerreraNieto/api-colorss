@@ -29,29 +29,29 @@ Aquí se detalla la lista de endpoints disponibles en la API, junto con sus mét
 
 ### Gestión de Paletas
 
-| Método | Endpoint                        | Código de Estado | Código de Error | `req.body`                      | `req.params` | Descripción                                                                      |
-|--------|---------------------------------|------------------|-----------------|---------------------------------|--------------|----------------------------------------------------------------------------------|
-| POST   | `/:user/palette/save`           | 200              | 400             | `palette`                       | `user`       | Guarda una paleta de colores en la base de datos del usuario                     |
-| DELETE | `/:user/:palette/delete`        | 200              | 400, 404        |                                 | `user`       | Elimina una paleta de colores de la base de datos del usuario                    |
-| PUT    | `/:user/modify/name`            | 200              | 400, 401        | `new name`                      | `user`       | Modifica el nombre del usuario en la base de datos                               |
-| PUT    | `/:user/modify/email`           | 200              | 400, 401        | `new name`                      | `user`       | Modifica el email del usuario                                                    |
-| PUT    | `/:user/modify/password`        | 200              | 400, 401, 404   | `oldPassword`, `newPassword`    | `user`       | Modifica la contraseña del usuario                                               |  
-| GET    | `/:user/palettes`               | 200              | 400, 401        |                                 | `user`       | Obtiene todas las paletas de colores guardadas en la base de datos del usuario   |
-| GET    | `/:user/palette`                | 200              | 400, 401        |                                 | `user`       | Obtiene una paleta de colores específica guardada en la base de datos del usuario|
-| PUT    | `/:user/:palette/modifyName`    | 200              | 400, 401        | `new name`                      | `user`       | Modifica el nombre de una paleta específica guardada en la base de datos         |
-| DELETE | `/:user/delete`                 | 200              | 404, 401        |                                 | `user`       | Elimina a el usaurio de la aplicación colorss                                    | 
-| POST   | `/:user/sendRecoveryEmail`      | 200              |400              |                                 | `user`       | Envia el email de recuperacion de contraseña                                     | 
+| Método | Endpoint                        | Código de Estado | Código de Error | `req.body`                      | `req.params`     | Descripción                                                                      |
+|--------|---------------------------------|------------------|-----------------|---------------------------------|------------------|----------------------------------------------------------------------------------|
+| POST   | `/:user/palette/save`           | 200              | 400             | `palette`                       | `user`           | Guarda una paleta de colores en la base de datos del usuario                     |
+| DELETE | `/:user/:palette/delete`        | 200              | 400, 404, 401   |                                 | `user`           | Elimina una paleta de colores de la base de datos del usuario                    |
+| PUT    | `/:user/modify/name`            | 200              | 400, 401        | `new name`                      | `user`           | Modifica el nombre del usuario en la base de datos                               |
+| PUT    | `/:user/modify/email`           | 200              | 400, 401        | `new name`                      | `user`           | Modifica el email del usuario                                                    |
+| PUT    | `/:user/modify/password`        | 200              | 400, 401        | `oldPassword`, `newPassword`    | `user`           | Modifica la contraseña del usuario                                               |  
+| GET    | `/:user/palettes`               | 200              | 400, 401        |                                 | `user`           | Obtiene todas las paletas de colores guardadas en la base de datos del usuario   |
+| GET    | `/:user/:palette`               | 200              | 400, 401, 404   |                                 | `user`, `palette`| Obtiene una paleta de colores específica guardada en la base de datos del usuario|
+| PUT    | `/:user/:palette/modifyName`    | 200              | 400, 401, 404   | `new name`                      | `user`, `palette`| Modifica el nombre de una paleta específica guardada en la base de datos         |
+| DELETE | `/:user/delete`                 | 200              | 400, 401        |                                 | `user`           | Elimina a el usaurio de la aplicación colorss                                    | 
+| POST   | `/:user/sendRecoveryEmail`      | 200              | 400             |                                 | `user`           | Envia el email de recuperacion de contraseña                                     | 
  
 
 ### Gestión de Paletas Adicional
 
-| Método | Endpoint        | Código de Estado | Código de Error | `req.body`          | `req.params` | Descripción                                                         |
-|--------|-----------------|------------------|-----------------|---------------------|--------------|---------------------------------------------------------------------|
-| GET    | `/palettes`     | 200              | 400             | `amount`            |              | Obtiene paletas de colores aleatorias                               |
-| GET    | `/paletteEmpty` | 200              | 400             |                     |              | Obtiene una paleta de colores vacía                                 |
-| GET    | `/paletteSearch`| 200              | 400             | `color`, `amount`, `category` |    | Realiza una búsqueda de paletas de colores por categoría           |
-| PUT    | `/modifyPalette`| 200              | 400             | `color`, `palette`  |              | Modifica una paleta de colores                                      |
-| POST   | `/paletteCreated`| 200             | 400             | `colors list`       |              | Crea una paleta de colores a partir de una lista de colores         |
+| Método | Endpoint         | Código de Estado | Código de Error | `req.body`                    | `req.params` | Descripción                                                         |
+|--------|------------------|------------------|-----------------|-------------------------------|--------------|---------------------------------------------------------------------|
+| GET    | `/palettes`      | 200              | 400             | `amount`                      |              | Obtiene paletas de colores aleatorias                               |
+| GET    | `/paletteEmpty`  | 200              | 400             |                               |              | Obtiene una paleta de colores vacía                                 |
+| GET    | `/paletteSearch` | 200              | 400             | `color`, `amount`, `category` |              | Realiza una búsqueda de paletas de colores por categoría            |
+| PUT    | `/modifyPalette` | 200              | 400             | `color`, `palette`            |              | Modifica una paleta de colores                                      |
+| POST   | `/paletteCreated`| 200              | 400             | `colors list`                 |              | Crea una paleta de colores a partir de una lista de colores         |
 
 ## Instalación
 
