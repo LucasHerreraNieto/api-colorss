@@ -42,9 +42,9 @@ exports.modifyPalette = async (req, res) =>{
     }
 }
 
-exports.searchPalette = async (req, res) =>{
+exports.searchPaletteByCategory = async (req, res) =>{
     try{
-        const palettes = await paletteService.paletteSearch(req.params.category,req.body.color,req.body.amount)
+        const palettes = await paletteService.paletteSearchByCategory(req.params.category,req.body.color,req.body.amount)
         res.json(palettes)
         res.status(200)
     }catch(err){

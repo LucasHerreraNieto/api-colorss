@@ -42,7 +42,7 @@ async function modifyPaletteName(req) {
     palette.changeName(name)
 }
 
-async function paletteSearch(category,color,amount) {
+async function paletteSearchByCategory(category,color,amount) {
     const palettes = []
     for(let i = 0; i < amount; i++) {
         const palette = new Palette(category,color)
